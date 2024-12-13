@@ -1,17 +1,32 @@
-import Image from "next/image";
+"use client";
+
 import { FcGoogle } from "react-icons/fc";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlinePersonRemoveAlt1 } from "react-icons/md";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import "./globals.css";
+import { useState } from "react";
+
 
 export default function Home() {
+
+  const [active, setActive] = useState("general");
+  const [activeConfiguration, setActiveConfiguration] = useState("metadata-only");
+
+  const changeConfiguration = (configuration: string) => {
+    setActiveConfiguration(configuration);
+  }
+
+  const changeTabs = (tab: string) => {
+    setActive(tab);
+  };
+
   return (
     <div className="flex flex-col  h-full">
       <div className="bg-[#141517] border border-b-gray-700 h-10">
       </div>
       <div className="flex justify-center">
-        <div className="w-[70%] flex flex-col gap-[20px] ">
+        <div className="w-[80%] flex flex-col gap-[20px] ">
 
           {/* 1.this is the breadcrumb navigation : Account / Emails / juliann */}
           <section className="">
@@ -50,17 +65,36 @@ export default function Home() {
           </section>
 
           {/* 3.this is the tabs section : General / Blocklist */}
-          <section className="flex gap-[20px] border-b border-b-[#2d2f33] pb-2 ">
-            <div className="flex gap-[10px] items-center text-[#919499]">
-              <div> <IoSettingsOutline /></div>
-              <div> General </div>
-            </div>
+          <section className="flex gap-[20px] border-b border-b-[#2d2f33] pb-0.25">
+            {/* General Tab */}
+            <button
+              onClick={() => changeTabs("general")}
+              className={`flex gap-[10px] items-center pb-2 ${active === "general"
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-[#919499]"
+                }`}
+            >
+              <div>
+                <IoSettingsOutline />
+              </div>
+              <div>General</div>
+            </button>
 
-            <div className="flex gap-[10px] items-center text-[#919499]">
-              <div> <MdOutlinePersonRemoveAlt1 /> </div>
-              <div> Blocklist </div>
-            </div>
+            {/* Blocklist Tab */}
+            <button
+              onClick={() => changeTabs("blocklist")}
+              className={`flex gap-[10px] items-center pb-2 ${active === "blocklist"
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-[#919499]"
+                }`}
+            >
+              <div>
+                <MdOutlinePersonRemoveAlt1 />
+              </div>
+              <div>Blocklist</div>
+            </button>
           </section>
+
 
           {/* 4.this is the Default Sharing Configuration Section*/}
           <section className="flex flex-col gap-[10px]">
@@ -69,7 +103,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-[10px] border-b border-b-[#2d2f33] pb-10">
               {/* metadata only*/}
-              <button className="border border-[#2a2c30] flex justify-between items-center p-2 rounded-xl">
+              <button onClick={() => changeConfiguration("metadata-only")} className={`border  flex justify-between items-center p-2 rounded-xl ${activeConfiguration === "metadata-only" ? "border-blue-600 bg-[#232529]" : "border-[#2a2c30]"}`}>
 
                 <div className="flex gap-[10px] items-center">
                   <div>
@@ -82,11 +116,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-4 h-4 border border-[#2a2c30] rounded-full"></div>
+                <div className={`w-4 h-4 lg:border border-[#2a2c30] rounded-full lg:flex items-center justify-center ${activeConfiguration === "metadata-only" ? "lg:bg-blue-600" : ""}`}>
+                  <div className={`${activeConfiguration === "metadata-only" ? "lg:bg-white rounded-full w-2 h-2" : ""}`}></div>
+                </div>
               </button>
 
               {/* subject line and metadata*/}
-              <button className="border border-[#2a2c30] flex justify-between items-center p-2 rounded-xl">
+              <button onClick={() => changeConfiguration("subject-line")} className={`border  flex justify-between items-center p-2 rounded-xl ${activeConfiguration === "subject-line" ? "border-blue-600 bg-[#232529]" : "border-[#2a2c30]"}`}>
                 <div className="flex gap-[10px] items-center">
                   <div>
                     <img alt="Subject Line and Metadata" src="/subjectlineandmetadata.png" className="rounded-xl" />
@@ -98,12 +134,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-4 h-4 border border-[#2a2c30] rounded-full"></div>
+                <div className={`w-4 h-4 lg:border border-[#2a2c30] rounded-full lg:flex items-center justify-center ${activeConfiguration === "subject-line" ? "lg:bg-blue-600" : ""}`}>
+                  <div className={`${activeConfiguration === "subject-line" ? "lg:bg-white rounded-full w-2 h-2" : ""}`}></div>
+                </div>
               </button>
 
               {/* full accesss*/}
 
-              <button className="border border-[#2a2c30] flex justify-between items-center p-2 rounded-xl">
+              <button onClick={() => changeConfiguration("full-access")} className={`border  flex justify-between items-center p-2 rounded-xl ${activeConfiguration === "full-access" ? "border-blue-600 bg-[#232529]" : "border-[#2a2c30]"}`}>
                 <div className="flex gap-[10px] items-center">
                   <div>
                     <img alt="Full Access" src="/FullAccess.png" className="rounded-xl" />
@@ -118,7 +156,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="w-4 h-4 border border-[#2a2c30] rounded-full"></div>
+                <div className={`w-4 h-4 lg:border border-[#2a2c30] rounded-full lg:flex items-center justify-center ${activeConfiguration === "full-access" ? "lg:bg-blue-600" : ""}`}>
+                  <div className={`${activeConfiguration === "full-access" ? "lg:bg-white rounded-full w-2 h-2" : ""}`}></div>
+                </div>
               </button>
             </div>
 
@@ -131,8 +171,25 @@ export default function Home() {
               <div className="text-[24px] text-white"> Individual inbox sharing</div>
 
               <div className="flex lg:flex-row flex-col  w-full lg:items-center items-start gap-[15px]">
-                <div className="lg:w-[85%] w-full">
-                  <input className="bg-transparent p-2 rounded-lg appearance-none w-full border border border-[#2d2f33]" />
+                <div className="lg:w-[85%] w-full p-2 flex lg:flex-row flex-col gap-[10px] justify-between border border border-[#2d2f33] rounded-lg">
+                  <div className="flex gap-[10px] items-center border border-[#2d2f33] rounded-lg p-1">
+                    <div className="text-white bg-[#17bbe8] rounded-full px-2 "> J</div>
+                    <div className="text-[#aaadb3] text-center">Jeremy Enderson</div>
+                    <div className="text-[#919499]">x</div>
+                  </div>
+                  <select
+                    className="bg-transparent text-[#aaadb3]  rounded-lg  "
+                  >
+                    <option value="metadata-only" className="bg-[#1a1a1a] ">
+                      Metadata Only
+                    </option>
+                    <option value="subject-line" className="bg-[#1a1a1a] ">
+                      Subject Line
+                    </option>
+                    <option value="full-access" className="bg-[#1a1a1a] ">
+                      Full Access
+                    </option>
+                  </select>
                 </div>
 
 
@@ -156,42 +213,64 @@ export default function Home() {
                 <div>User </div>
                 <div>Access  </div>
               </div>
-                {/* Users with different Permissions*/}
+              {/* Users with different Permissions*/}
               <div>
-                  {/* User 1 */}
+                {/* User 1 */}
                 <div className="py-4 flex justify-between border-b border-[#2d2f33] gap-[10px]">
                   <div className="flex gap-[10px] items-center ">
-                    <div className="text-white bg-[#9364fa] rounded-full px-2 py-0.5"> N</div>
-                    <div className="text-white text-center">Nick Sharp </div>
-                    <div className="text-[#919499]">nick@attio.com</div>
+                    <div className="md:flex hidden text-white bg-[#9364fa] rounded-full px-2 py-0.5"> N</div>
+                    <div className="md:flex hidden text-white text-center">Nick Sharp </div>
+                    <div className="md:text-[#919499] text-white">nick@attio.com</div>
                   </div>
 
                   <div>
-
-                    <div className="text-[#aaadb3] text-center"> Full Access</div>
+                    <select
+                      className="h-full bg-transparent text-[#aaadb3] rounded-lg w-full whitespace-normal"
+                    >
+                      <option value="metadata-only" className="bg-[#1a1a1a]">
+                        Metadata Only
+                      </option>
+                      <option value="subject-line" className="bg-[#1a1a1a]">
+                        Subject Line
+                      </option>
+                      <option value="full-access" className="bg-[#1a1a1a]">
+                        Full Access
+                      </option>
+                    </select>
 
                   </div>
                 </div>
 
-                 {/* User 2 */}
-                 <div className="py-4 flex justify-between border-b border-[#2d2f33] gap-[10px]">
+                {/* User 2 */}
+                <div className="py-4 flex justify-between border-b border-[#2d2f33] gap-[10px]">
                   <div className="flex gap-[10px] items-center ">
-                    <div className="text-white bg-[#f5b800] rounded-full px-2 py-0.5"> A</div>
-                    <div className="text-white text-center">Alex Christie </div>
-                    <div className="text-[#919499]">alex@attio.com</div>
+                    <div className="md:flex hidden text-white bg-[#f5b800] rounded-full px-2 py-0.5"> A</div>
+                    <div className="md:flex hidden text-white text-center">Alex Christie </div>
+                    <div className="md:text-[#919499] text-white">alex@attio.com</div>
                   </div>
 
                   <div>
 
-                    <div className="text-[#aaadb3] text-center"> Metadata only</div>
+                    <select
+                      className="h-full bg-transparent text-[#aaadb3] rounded-lg w-full whitespace-normal"
+                    >
+                      <option value="metadata-only" className="bg-[#1a1a1a]">
+                        Metadata Only
+                      </option>
+                      <option value="subject-line" className="bg-[#1a1a1a]">
+                        Subject Line
+                      </option>
+                      <option value="full-access" className="bg-[#1a1a1a]">
+                        Full Access
+                      </option>
+                    </select>
+
 
                   </div>
                 </div>
 
               </div>
             </div>
-
-
 
           </section>
 
