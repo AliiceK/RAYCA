@@ -59,8 +59,9 @@ export default function Home() {
             </div>
 
             <div className="text-[#9b9da3]">
-              Update your inbox permissions and settings. <a href="#" className="text-blue-600 underline underline-offset-4"> Learn More.</a>
+              Update your inbox permissions and settings. <a href="#" className="text-blue-600 underline underline-offset-4">Learn More.</a>
             </div>
+
 
           </section>
 
